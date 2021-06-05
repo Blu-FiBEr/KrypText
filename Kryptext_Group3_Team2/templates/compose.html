@@ -1,0 +1,59 @@
+{% extends 'base_2.html' %}
+
+{% block head %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock head %}
+
+{% block body %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="input-group mb-3 mx-5 my-5">
+        <div class="input-group-append"></div>
+        <input type="text" id="friend_name" placeholder="To:" name="friend_name" required/>
+    </div>
+    <div class="input-group mb-3 mx-5 my-2">
+        <textarea type="text" id="message" rows='10' cols='100' name="message" placeholder= "Message:"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mx-5" id="Send" name="send">Send</button>
+</form>
+{% endblock body %}
+{% block script1 %}
+<script>
+    $(document).ready(function(){
+        $('#Send').click(function(){
+
+            var name = $('#friend_name').val();
+            var userdetails = name;
+            var blob = new Blob([userdetails],
+                {
+                    type:"application/json;utf - 8"
+                }
+            )
+
+            var userLink = document.createElement('a');
+            userLink.setAttribute('download', 'recipient.txt');
+            userLink.setAttribute('href', window.URL.createObjectURL(blob));
+            userLink.click();
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#Send').click(function(){
+
+            var message = $('#message').val();
+            var mssg = message;
+            var blob = new Blob([mssg],
+                {
+                    type:"application/json;utf - 8"
+                }
+            )
+
+            var userMssg = document.createElement('a');
+            userMssg.setAttribute('download', 'message.txt');
+            userMssg.setAttribute('href', window.URL.createObjectURL(blob));
+            userMssg.click();
+        });
+    });
+</script>
+{% endblock script1 %}
